@@ -24,6 +24,7 @@ export default function Home() {
     const getUserInfo = async () => {
       await liff.getProfile()
         .then((profile) => {
+          console.log(profile);
           const {displayName, userId} = profile;
           setUserInfo({name: displayName, id: userId});
         }).catch((error) => alert(`エラー： ${error}`));
