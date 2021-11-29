@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const useLiffLogin = () => {
 
@@ -8,13 +8,16 @@ export const useLiffLogin = () => {
         let unmounted = false;
         const getUserInfo = async () => {
             const liff = (await import('@line/liff')).default;
-            await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID});
-            liff.init({
-            liffId: process.env.NEXT_PUBLIC_LIFF_ID,
+            await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                .catch((err) => {
+                    alert(`LIFFの初期化失敗。\n${err}`);
             });
+            if (!liff.isLoggedIn()) {
+                await liff.login();
+            };
             if (!unmounted) {
                 setLiff(liff);
-            }
+            };
         };
         const cleanUp = () => {
             unmounted = true;
