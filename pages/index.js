@@ -24,7 +24,9 @@ export default function Home() {
             const { userId, displayName } = profile;
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
-            window.alert(`Error sending message: ${error}`);
+            if (typeof window !== 'undefined') {
+              window.alert(`Error sending message: ${error}`);
+            }
           });
       }
     })
