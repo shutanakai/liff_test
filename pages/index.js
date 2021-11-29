@@ -10,6 +10,7 @@ export default function Home() {
     id: '',
   };
   const [userInfo, setUserInfo] = useState(initialInfo);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const getUserInfo = () => {
     liff.init({
@@ -23,7 +24,7 @@ export default function Home() {
             const { userId, displayName } = profile;
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
-            console.log(error);
+            setErrorMessage(error);
           });
       }
     })
@@ -37,6 +38,9 @@ export default function Home() {
             <button onClick={getUserInfo}>ユーザー情報の取得</button>
             <p>ユーザー名：{userInfo.name}</p>
             <p>ユーザーID：{userInfo.id}</p>
+            {errorMessage !== '' && (
+              <p>エラーメッセージ：{errorMessage}</p>
+            )}
           </div>
         </div>
       )}
