@@ -20,7 +20,7 @@ export default function Home() {
         .then((profile) => {
           const {displayName, userId} = profile;
           setUserInfo({name: displayName, id: userId});
-        }).catch((error) => console.log(error));
+        }).catch((error) => alert(`エラー： ${error}`));
     }
   }
 

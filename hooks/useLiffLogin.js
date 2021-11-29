@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 export const useLiffLogin = () => {
 
     const [liff, setLiff] = useState();
-    const [clientAlert, setClientAlert] = useState(undefined);
 
     useEffect(() => {
         let unmounted = false;
@@ -21,12 +20,9 @@ export const useLiffLogin = () => {
             unmounted = true;
         }
 
-        const { alert } = window;
-        setClientAlert(alert);
-
         getUserInfo();
         return cleanUp;
-    }, [clientAlert]);
+    }, []);
 
     return liff;
 
