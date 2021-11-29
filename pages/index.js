@@ -1,12 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import liff from '@line/liff'
 
 export default function Home() {
 
-  const isClient = () => typeof window !== 'undefined';
+  const [clientAlert, setClientAlert] = useState(undefined);
+
+  useEffect(() => {
+    const { alert } = window;
+
+    setClientAlert(alert);
+  }, []);
 
   const initialInfo = {
     name: '',
@@ -27,7 +33,7 @@ export default function Home() {
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
             if (isClient) {
-              window.alert(`Error sending message: ${error}`);
+              clientAlert(`Error sending message: ${error}`);
             }
           });
       }
