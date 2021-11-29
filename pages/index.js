@@ -6,6 +6,8 @@ import liff from '@line/liff'
 
 export default function Home() {
 
+  const isClient = () => typeof window !== 'undefined';
+
   const initialInfo = {
     name: '',
     id: '',
@@ -24,7 +26,7 @@ export default function Home() {
             const { userId, displayName } = profile;
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
-            if (typeof window !== 'undefined') {
+            if (isClient) {
               window.alert(`Error sending message: ${error}`);
             }
           });
