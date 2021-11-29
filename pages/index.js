@@ -5,15 +5,6 @@ import { useState, useEffect } from 'react'
 import liff from '@line/liff'
 
 export default function Home() {
-
-  const [clientAlert, setClientAlert] = useState(undefined);
-
-  useEffect(() => {
-    const { alert } = window;
-
-    setClientAlert(alert);
-  }, []);
-
   const initialInfo = {
     name: '',
     id: '',
@@ -32,9 +23,7 @@ export default function Home() {
             const { userId, displayName } = profile;
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
-            if (isClient) {
-              clientAlert(`Error sending message: ${error}`);
-            }
+            console.log(error);
           });
       }
     })
