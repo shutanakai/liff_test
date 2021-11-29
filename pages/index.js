@@ -11,8 +11,8 @@ export default function Home() {
   };
   const [userInfo, setUserInfo] = useState(initialInfo);
   useEffect(() => {
-    const getUserInfo = () => {
-      liff.getProfile()
+    const getUserInfo = async () => {
+      await liff.getProfile()
         .then((profile) => {
           const {displayName, userId} = profile;
           setUserInfo({name: displayName, id: userId});
