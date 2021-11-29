@@ -14,17 +14,17 @@ export default function Home() {
 
   const getUserInfo = () => {
     liff.init({
-      liffId: process.env.NEXT_PUBLIC_LIFF_ID
+      liffId: process.env.NEXT_PUBLIC_LIFF_ID,
     }).then(() => {
       if (!liff.isLoggedIn()) {
-        liff.login({})
+        liff.login({});
       } else {
         liff.getProfile()
           .then((profile) => {
             const { userId, displayName } = profile;
             setUserInfo({name: displayName, id: userId});
           }).catch((error) => {
-            alert(`Error sending message: ${error}`);
+            window.alert(`Error sending message: ${error}`);
           });
       }
     })
