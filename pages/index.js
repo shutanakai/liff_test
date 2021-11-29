@@ -15,7 +15,6 @@ export default function Home() {
   const inputRef = useQRCode({
     text: userInfo.id,
     options: {
-      type: 'image/png',
       level: 'H',
       margin: 2,
       scale: 2,
@@ -41,7 +40,7 @@ export default function Home() {
       <div className="member-card-app">
         <div className="header">
           <p>{userInfo.name} さん</p>
-          <Image ref={inputRef} alt="" />
+          <canvas ref={inputRef} />
         </div>
       </div>
     </section>
