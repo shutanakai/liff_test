@@ -17,6 +17,7 @@ export function useQRCode({
                 options,
                 function (error) {
                     if (error) {
+                        console.log(error);
                         throw error;
                     }
                 },
