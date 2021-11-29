@@ -1,13 +1,14 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
-import { useQRCode } from 'next-qrcode'
 import { useLiffLogin } from '../hooks/useLiffLogin'
+import { useQRCode } from '../hooks/useQRCode'
 
 export default function Home() {
   const userInfo = useLiffLogin();
+  const [qrSrc, setQrSrc] = useState("default");
   const { inputRef } = useQRCode({
-    text: "https://www.google.com/?hl=ja",
+    text: qrSrc,
     options: {
       level: 'H',
       margin: 2,
@@ -15,6 +16,10 @@ export default function Home() {
       width: 240,
     },
   });
+
+  useEffect(() => {
+    setQrSrc(userInfo.id);
+  }, [userInfo]);
 
   return (
     <>
