@@ -6,7 +6,7 @@ export const useLiffLogin = () => {
 
     useEffect(() => {
         let unmounted = false;
-        const getUserInfo = async () => {
+        const liffInit = async () => {
             const liff = (await import('@line/liff')).default;
             await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                 .catch((err) => {
@@ -23,7 +23,7 @@ export const useLiffLogin = () => {
             unmounted = true;
         }
 
-        getUserInfo();
+        liffInit();
         return cleanUp;
     }, []);
 
