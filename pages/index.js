@@ -12,7 +12,7 @@ export default function Home() {
   };
   const [userInfo, setUserInfo] = useState(initialInfo);
   const { inputRef } = useQRCode({
-    text: userInfo.id,
+    text: "https://www.google.com/?hl=ja",
     options: {
       level: 'H',
       margin: 2,
