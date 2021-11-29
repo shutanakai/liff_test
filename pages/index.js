@@ -5,14 +5,9 @@ import { useQRCode } from 'next-qrcode'
 import { useLiffLogin } from '../hooks/useLiffLogin'
 
 export default function Home() {
-  const liff = useLiffLogin();
-  const initialInfo = {
-    name: '',
-    id: '',
-  };
-  const [userInfo, setUserInfo] = useState(initialInfo);
+  const userInfo = useLiffLogin();
   const { inputRef } = useQRCode({
-    text: "https://www.google.com/?hl=ja",
+    text: userInfo.id,
     options: {
       level: 'H',
       margin: 2,
@@ -20,19 +15,6 @@ export default function Home() {
       width: 240,
     },
   });
-  useEffect(() => {
-    const getUserInfo = async () => {
-      await liff.getProfile()
-        .then((profile) => {
-          if (profile.displayName && profile.userId) {
-            const {displayName, userId} = profile;
-            setUserInfo({name: displayName, id: userId});
-          }
-        }).catch((error) => alert(`エラー： ${error}`));
-    };
-    getUserInfo();
-  }, [liff]);
-
 
   return (
     <>

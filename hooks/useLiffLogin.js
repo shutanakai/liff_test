@@ -1,19 +1,30 @@
 import { useEffect, useState } from 'react'
 
 export const useLiffLogin = () => {
-
-    const [liff, setLiff] = useState();
+    const initialInfo = {
+        name: '',
+        id: '',
+      };
+      const [userInfo, setUserInfo] = useState(initialInfo);
 
     useEffect(() => {
         let unmounted = false;
-        const liffInit = async () => {
+        const initLiff = async () => {
             const liff = (await import('@line/liff')).default;
             await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                 .catch((err) => {
                     alert(`LIFFの初期化失敗。\n${err}`);
             });
             if (!liff.isLoggedIn()) {
-                await liff.login();
+                liff.login();
+            } else {
+                liff.getProfile()
+                    .then((profile) => {
+                        const {displayName, userId} = profile;
+                        setUserInfo({name: displayName, id: userId});
+                    }).catch((error) => {
+                        alert(`エラー： ${error}`);
+                    });
             };
             if (!unmounted) {
                 setLiff(liff);
@@ -23,10 +34,10 @@ export const useLiffLogin = () => {
             unmounted = true;
         }
 
-        liffInit();
+        initLiff();
         return cleanUp;
     }, []);
 
-    return liff;
+    return userInfo;
 
 }
