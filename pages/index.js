@@ -6,7 +6,7 @@ import { useQRCode } from '../hooks/useQRCode'
 
 export default function Home() {
   const userInfo = useLiffLogin();
-  const [qrSrc, setQrSrc] = useState("default");
+  const [qrSrc, setQrSrc] = useState(null);
   const { inputRef } = useQRCode({
     text: qrSrc,
     options: {
