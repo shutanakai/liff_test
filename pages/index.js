@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
+import { useQRCode } from 'next-qrcode'
 import { useLiffLogin } from '../hooks/useLiffLogin'
 
 export default function Home() {
@@ -10,6 +11,15 @@ export default function Home() {
     id: '',
   };
   const [userInfo, setUserInfo] = useState(initialInfo);
+  const { inputRef } = useQRCode({
+    text: userInfo.id,
+    options: {
+      level: 'H',
+      margin: 2,
+      scale: 2,
+      width: 240,
+    },
+  });
   useEffect(() => {
     const getUserInfo = async () => {
       await liff.getProfile()
@@ -29,6 +39,7 @@ export default function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo.name}</p>
           <p>ユーザーID：{userInfo.id}</p>
+          <canvas ref={inputRef} />
         </div>
       </div>
     </section>
