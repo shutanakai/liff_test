@@ -9,10 +9,6 @@ export default function Home() {
       margin: 2,
       scale: 2,
       width: 240,
-      color: {
-        dark: '#010599FF',
-        light: '#FFBF60FF',
-      },
     },
   });
   console.log(inputRef);
