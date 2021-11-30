@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useQRCode } from './useQRCode'
 
 export const useLiffLogin = () => {
     const initialInfo = {

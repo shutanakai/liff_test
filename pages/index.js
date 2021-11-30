@@ -21,7 +21,10 @@ export default function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo.name}</p>
           <p>ユーザーID：{userInfo.id}</p>
-          <Image ref={inputRef} alt={userInfo.id} />
+          <Image
+            ref={inputRef}
+            alt={userInfo.id}
+          />
         </div>
       </div>
     </section>
