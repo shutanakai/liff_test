@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 const QRCode = require('qrcode');
 
 export const useLineQRCode = ({...props}) => {
-    const inputRef = React.useRef(null);
+    const inputRef = useRef(null);
+    const userInfoRef = useRef({name: 'テスト', id: '12345'});
     const { options } = props;
-    const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
-
-    React.useEffect(
+    useEffect(
         () => {
             const getUserInfo = async () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
-                await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
-                    .catch((err) => {
-                        alert(`LIFFの初期化失敗。\n${err}`);
-                });
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
-                    await liff.getProfile()
-                        .then((profile) => {
-                            const {displayName, userId} = profile;
-                            user = {name: displayName, id: userId};
-                            console.log(user);
-                        }).catch((error) => {
-                            alert(`エラー： ${error}`);
-                        });
+                if (!liff.id) {
+                    await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                        .catch((err) => {
+                            alert(`LIFFの初期化失敗。\n${err}`);
+                    });
+                    if (!liff.isLoggedIn()) {
+                        liff.login();
+                    } else {
+                        await liff.getProfile()
+                            .then((profile) => {
+                                const {displayName, userId} = profile;
+                                user = {name: displayName, id: userId};
+                                console.log(user);
+                            }).catch((error) => {
+                                alert(`エラー： ${error}`);
+                            });
                 };
+                }
                 return user;
             };
             const initQRCode = async () => {
@@ -57,7 +58,7 @@ export const useLineQRCode = ({...props}) => {
                                 }
                         });
                     }
-                    setUserInfo(user);
+                    userInfoRef.current = user;
                 }
             };
             initQRCode();
@@ -65,5 +66,5 @@ export const useLineQRCode = ({...props}) => {
         [options, inputRef],
     );
 
-    return { userInfo, inputRef };
+    return { userInfoRef, inputRef };
 }
