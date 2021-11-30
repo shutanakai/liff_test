@@ -62,7 +62,7 @@ export const useLineQRCode = () => {
                                 }
                         });
                     }
-                    setUserInfo(user);
+                    await setUserInfo(user);
                 }
             };
             initQRCode();
