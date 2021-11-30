@@ -2,7 +2,7 @@ import React from 'react';
 const QRCode = require('qrcode');
 import { useLiffLogin } from './useLiffLogin'
 
-export const useQRCode = ({...props}) => {
+export const useLineQRCode = ({...props}) => {
     const inputRef = React.useRef(null);
     const { options } = props;
     const userInfo = useLiffLogin();
