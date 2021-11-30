@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 const QRCode = require('qrcode');
 
 export const useLineQRCode = ({...props}) => {
     const inputRef = React.useRef(null);
     const { options } = props;
+    const [userInfo, setUserInfo] = useState({name: '', id: ''});
 
     React.useEffect(
         () => {
             const getUserInfo = async () => {
-                inputRef.current.userInfo = {name: '', id: ''};
+                let userInfo;
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                     .catch((err) => {
@@ -20,19 +21,20 @@ export const useLineQRCode = ({...props}) => {
                     await liff.getProfile()
                         .then((profile) => {
                             const {displayName, userId} = profile;
-                            inputRef.current.userInfo = {name: displayName, id: userId};
+                            userInfo = {name: displayName, id: userId};
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
                 };
+                return userInfo;
             };
             const initQRCode = async () => {
                 if (inputRef && inputRef.current) {
-                    await getUserInfo();
                     if (inputRef.current instanceof HTMLCanvasElement && inputRef.current.userInfo) {
+                        const userInfo = await getUserInfo();
                         await QRCode.toCanvas(
                             inputRef.current,
-                            inputRef.current.userInfo.id,
+                            userInfo.id,
                             options,
                             function (error) {
                                 if (error) {
@@ -42,7 +44,7 @@ export const useLineQRCode = ({...props}) => {
                         );
                     } else if (inputRef.current instanceof HTMLImageElement && inputRef.current.userInfo) {
                         await QRCode.toDataURL(
-                            inputRef.current.userInfo.id,
+                            userInfo.id,
                             options,
                             function (error, url) {
                                 if (error) {
@@ -53,12 +55,13 @@ export const useLineQRCode = ({...props}) => {
                                 }
                         });
                     }
+                    setUserInfo(userInfo);
                 }
             };
             initQRCode();
         },
-        [options, inputRef],
+        [options, inputRef, userInfo],
     );
 
-    return { inputRef };
+    return { userInfo, inputRef };
 }

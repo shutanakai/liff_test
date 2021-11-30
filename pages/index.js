@@ -11,6 +11,7 @@ export default function Home() {
       width: 240,
     },
   });
+  console.log(inputRef);
 
   return (
     <>
