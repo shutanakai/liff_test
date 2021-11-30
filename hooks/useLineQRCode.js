@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 const QRCode = require('qrcode');
 
 export const useLineQRCode = ({...props}) => {
-    const inputRef = React.useRef(null);
+    const inputRef = useRef(null);
     const { options } = props;
-    const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
+    const userInfoRef = useRef({name: 'テスト', id: '12345'});
 
-    React.useEffect(
+    useEffect(
         () => {
             const getUserInfo = async () => {
                 let user;
@@ -57,7 +57,7 @@ export const useLineQRCode = ({...props}) => {
                                 }
                         });
                     }
-                    setUserInfo(user);
+                    userInfoRef.current = user;
                 }
             };
             initQRCode();
@@ -65,5 +65,5 @@ export const useLineQRCode = ({...props}) => {
         [options],
     );
 
-    return { userInfo, inputRef };
+    return { userInfoRef, inputRef };
 }
