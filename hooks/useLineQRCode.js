@@ -30,9 +30,10 @@ export const useLineQRCode = ({...props}) => {
                 return user;
             };
             const initQRCode = async () => {
+                let user;
                 if (inputRef && inputRef.current) {
-                    if (inputRef.current instanceof HTMLCanvasElement && inputRef.current.userInfo) {
-                        const user = await getUserInfo();
+                    user = await getUserInfo();
+                    if (inputRef.current instanceof HTMLCanvasElement && user) {
                         await QRCode.toCanvas(
                             inputRef.current,
                             user.id,
@@ -43,7 +44,7 @@ export const useLineQRCode = ({...props}) => {
                                 }
                             },
                         );
-                    } else if (inputRef.current instanceof HTMLImageElement && inputRef.current.userInfo) {
+                    } else if (inputRef.current instanceof HTMLImageElement && user) {
                         await QRCode.toDataURL(
                             user.id,
                             options,
