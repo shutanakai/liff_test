@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useLineQRCode } from '../hooks/useLineQRCode'
+import { memo } from 'react';
 
-export default function Home() {
+export default memo(function Home() {
   const { userInfoRef, inputRef } = useLineQRCode({
     options: {
       level: 'H',
@@ -17,8 +18,8 @@ export default function Home() {
     <section className="app-wrapper">
       <div className="member-card-app">
         <div className="header">
-          <p>ユーザー名：{userInfoRef.current ? userInfoRef.current.name : 'undifined'}</p>
-          <p>ユーザーID：{userInfoRef.current ? userInfoRef.current.id : 'undifined'}</p>
+          <p>ユーザー名：{userInfoRef.current.name}</p>
+          <p>ユーザーID：{userInfoRef.current.id}</p>
           <img
             ref={inputRef}
           />
@@ -27,4 +28,4 @@ export default function Home() {
     </section>
     </>
   )
-};
+});
