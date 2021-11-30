@@ -13,7 +13,7 @@ export default memo(function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo ? userInfo.name : ""}</p>
           <p>ユーザーID：{userInfo ? userInfo.id : ""}</p>
-          <Image
+          <img
             ref={inputRef}
             alt={userInfo ? userInfo.id : ""}
           />
