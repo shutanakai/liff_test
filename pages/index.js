@@ -4,14 +4,7 @@ import { useLineQRCode } from '../hooks/useLineQRCode'
 import { memo } from 'react';
 
 export default memo(function Home() {
-  const { userInfo, inputRef } = useLineQRCode({
-    options: {
-      level: 'H',
-      margin: 2,
-      scale: 2,
-      width: 240,
-    },
-  });
+  const { userInfo, inputRef } = useLineQRCode();
 
   return (
     <>
@@ -20,8 +13,9 @@ export default memo(function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo ? userInfo.name : ""}</p>
           <p>ユーザーID：{userInfo ? userInfo.id : ""}</p>
-          <img
+          <Image
             ref={inputRef}
+            alt={userInfo ? userInfo.id : ""}
           />
         </div>
       </div>

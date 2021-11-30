@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 const QRCode = require('qrcode');
 
-export const useLineQRCode = ({...props}) => {
+export const useLineQRCode = () => {
     const inputRef = useRef(null);
-    const { options } = props;
     const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
 
     useEffect(
         () => {
+            const options = {
+                level: 'H',
+                margin: 2,
+                scale: 2,
+                width: 240,
+            };
             const getUserInfo = async () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
