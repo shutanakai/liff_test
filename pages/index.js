@@ -2,24 +2,16 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
 import { useLiffLogin } from '../hooks/useLiffLogin'
-import { useQRCode } from '../hooks/useQRCode'
+import { useBarcode } from 'react-barcodes'
 
 export default function Home() {
   const userInfo = useLiffLogin();
-  const [qrSrc, setQrSrc] = useState("https://www.google.com/");
-  const { inputRef } = useQRCode({
-    text: qrSrc,
+  const { inputRef } = useBarcode({
+    value: 'react-barcodes',
     options: {
-      level: 'H',
-      margin: 2,
-      scale: 2,
-      width: 240,
-    },
+      background: '#ffff00',
+    }
   });
-
-  useEffect(() => {
-    setQrSrc(userInfo.id);
-  }, [userInfo]);
 
   return (
     <>
@@ -28,7 +20,7 @@ export default function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo.name}</p>
           <p>ユーザーID：{userInfo.id}</p>
-          <canvas ref={inputRef} />
+          <img ref={inputRef} />
         </div>
       </div>
     </section>
