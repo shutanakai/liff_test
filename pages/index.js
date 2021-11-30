@@ -18,8 +18,8 @@ export default function Home() {
     <section className="app-wrapper">
       <div className="member-card-app">
         <div className="header">
-          {/* <p>ユーザー名：{userInfo.name}</p>
-          <p>ユーザーID：{userInfo.id}</p> */}
+          <p>ユーザー名：{inputRef.userInfo.name}</p>
+          <p>ユーザーID：{inputRef.userInfo.id}</p>
           <img
             ref={inputRef}
           />
