@@ -11,15 +11,14 @@ export default function Home() {
       width: 240,
     },
   });
-  console.log(inputRef);
 
   return (
     <>
     <section className="app-wrapper">
       <div className="member-card-app">
         <div className="header">
-          <p>ユーザー名：{inputRef.current.userInfo ? inputRef.current.userInfo.name : ""}</p>
-          <p>ユーザーID：{inputRef.current.userInfo ? inputRef.current.userInfo.id : ""}</p>
+          <p>ユーザー名：{inputRef.current ? inputRef.current.userInfo.name : ""}</p>
+          <p>ユーザーID：{inputRef.current ? inputRef.current.userInfo.id : ""}</p>
           <img
             ref={inputRef}
           />
