@@ -67,7 +67,7 @@ export const useLineQRCode = () => {
             };
             initQRCode();
         },
-        [],
+        [setUserInfo],
     );
 
     return { userInfo, inputRef };
