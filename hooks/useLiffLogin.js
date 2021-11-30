@@ -15,9 +15,9 @@ export const useLiffLogin = () => {
                     alert(`LIFFの初期化失敗。\n${err}`);
             });
             if (!liff.isLoggedIn()) {
-                liff.login();
+                // liff.login();
             } else {
-                liff.getProfile()
+                await liff.getProfile()
                     .then((profile) => {
                         const {displayName, userId} = profile;
                         setUserInfo({name: displayName, id: userId});

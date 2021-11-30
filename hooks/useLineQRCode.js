@@ -1,17 +1,34 @@
 import React from 'react';
 const QRCode = require('qrcode');
-import { useLiffLogin } from './useLiffLogin'
 
 export const useLineQRCode = ({...props}) => {
     const inputRef = React.useRef(null);
     const { options } = props;
-    const userInfo = useLiffLogin();
 
     React.useEffect(
         () => {
+            const getUserInfo = async () => {
+                const liff = (await import('@line/liff')).default;
+                await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                    .catch((err) => {
+                        alert(`LIFFの初期化失敗。\n${err}`);
+                });
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    await liff.getProfile()
+                        .then((profile) => {
+                            const {displayName, userId} = profile;
+                            return {name: displayName, id: userId};
+                        }).catch((error) => {
+                            alert(`エラー： ${error}`);
+                        });
+                };
+            };
             const initQRCode = async () => {
                 if (inputRef && inputRef.current) {
-                    if (inputRef.current instanceof HTMLCanvasElement) {
+                    const userInfo = await getUserInfo();
+                    if (inputRef.current instanceof HTMLCanvasElement && userInfo) {
                         await QRCode.toCanvas(
                             inputRef.current,
                             userInfo.id,
@@ -22,7 +39,7 @@ export const useLineQRCode = ({...props}) => {
                                 }
                             },
                         );
-                    } else if (inputRef.current instanceof HTMLImageElement) {
+                    } else if (inputRef.current instanceof HTMLImageElement && userInfo) {
                         await QRCode.toDataURL(
                             userInfo.id,
                             options,
@@ -39,8 +56,8 @@ export const useLineQRCode = ({...props}) => {
             };
             initQRCode();
         },
-        [userInfo, options, inputRef],
+        [options, inputRef],
     );
 
-    return { userInfo, inputRef };
+    return { inputRef };
 }
