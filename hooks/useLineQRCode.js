@@ -8,7 +8,7 @@ export const useLineQRCode = ({...props}) => {
     React.useEffect(
         () => {
             const getUserInfo = async () => {
-                let userInfo;
+                inputRef.current.userInfo = {name: '', id: ''};
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                     .catch((err) => {
@@ -20,16 +20,15 @@ export const useLineQRCode = ({...props}) => {
                     await liff.getProfile()
                         .then((profile) => {
                             const {displayName, userId} = profile;
-                            userInfo = {name: displayName, id: userId};
+                            inputRef.current.userInfo = {name: displayName, id: userId};
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
                 };
-                return userInfo;
             };
             const initQRCode = async () => {
                 if (inputRef && inputRef.current) {
-                    inputRef.current.userInfo = await getUserInfo();
+                    await getUserInfo();
                     if (inputRef.current instanceof HTMLCanvasElement && inputRef.current.userInfo) {
                         await QRCode.toCanvas(
                             inputRef.current,
