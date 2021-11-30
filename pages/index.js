@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useEffect, useState } from 'react'
 import { useLineQRCode } from '../hooks/useLineQRCode'
 
 export default function Home() {
@@ -8,14 +7,10 @@ export default function Home() {
     options: {
       type: 'image/jpeg',
       quality: 0.3,
-      level: 'M',
-      margin: 3,
-      scale: 4,
-      width: 200,
-      color: {
-        dark: '#010599FF',
-        light: '#FFBF60FF',
-      },
+      level: 'H',
+      margin: 2,
+      scale: 2,
+      width: 240,
     },
   });
 
