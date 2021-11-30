@@ -4,7 +4,7 @@ const QRCode = require('qrcode');
 export const useLineQRCode = ({...props}) => {
     const inputRef = useRef(null);
     const { options } = props;
-    const userInfoRef = useRef({name: 'テスト', id: '12345'});
+    const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
 
     useEffect(
         () => {
@@ -57,7 +57,7 @@ export const useLineQRCode = ({...props}) => {
                                 }
                         });
                     }
-                    userInfoRef.current = user;
+                    setUserInfo(user);
                 }
             };
             initQRCode();
@@ -65,5 +65,5 @@ export const useLineQRCode = ({...props}) => {
         [options],
     );
 
-    return { userInfoRef, inputRef };
+    return { userInfo, inputRef };
 }
