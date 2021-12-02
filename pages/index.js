@@ -1,14 +1,21 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useLiffToken } from '../hooks/useLiffToken'
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import QRCode from "qrcode.react"
 
 export default memo(function Home() {
   const { token, liffSendMessage } = useLiffToken();
+  const [status, setStatus] = useState(false);
+  const [err, setErr] = useState("");
 
   const sendMessages = (message) => {
-    liffSendMessage(message);
+    liffSendMessage(message).then(() => {
+      console.log("success");
+    }).catch((err) => {
+      setStatus(true);
+      setErr(err);
+    });
   }
 
   return (
@@ -27,6 +34,9 @@ export default memo(function Home() {
               type: 'text',
               text: 'Hello, World!'
           })}>メッセージ送信</button>
+          {!status && (
+            <p>sendMessages失敗</p>
+          )}
         </div>
       </div>
     </section>
