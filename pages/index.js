@@ -34,8 +34,13 @@ export default memo(function Home() {
         await liff
             .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID })
             .then(() => {
-                liff.sendMessages(messages);
-                liff.closeWindow();
+                liff.sendMessages(messages)
+                    .then(() => {
+                        liff.closeWindow();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             })
             .catch((err) => {
                 alert(`メッセージ送信失敗\n${err}`);
