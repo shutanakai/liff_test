@@ -22,6 +22,10 @@ export default memo(function Home() {
                   .then(() => {
                       const idToken = liff.getDecodedIDToken();
                       setToken(idToken);
+                      liff.sendMessages([{
+                        type: 'text',
+                        text: '初期化完了'
+                      }]);
                   })
                   .catch((err) => {
                       alert(`LIFFの初期化失敗。\n${err}`);
