@@ -19,10 +19,6 @@ export const useLineQRCode = () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
-                    .then(() => {
-                        const idToken = liff.getDecodedIDToken();
-                        console.log(idToken ? idToken : "idToken is null");
-                    })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
@@ -37,6 +33,8 @@ export const useLineQRCode = () => {
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
+                    const idToken = await liff.getDecodedIDToken();
+                    await console.log(idToken ? idToken : "idToken is null");
                 };
                 return user;
             };
