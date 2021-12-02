@@ -8,6 +8,7 @@ export default memo(function Home() {
   const [status, setStatus] = useState(false);
   const [token, setToken] = useState(null);
   const [liff, setLiff] = useState(null);
+  const [err, setErr] = useState("");
   const message = [{
     type: 'text',
     text: 'Hello, World!'
@@ -43,7 +44,7 @@ export default memo(function Home() {
         console.log("success");
       }).catch((err) => {
         setStatus(true);
-        alert(err);
+        setErr(err.toString());
       });
     } else {
       setStatus(true);
@@ -64,7 +65,10 @@ export default memo(function Home() {
           )}
           <button onClick={() => sendMessages(message)}>メッセージ送信</button>
           {status && (
-            <p>sendMessages失敗</p>
+            <div>
+              <p>sendMessages失敗</p>
+              <p>{err}</p>
+            </div>
           )}
         </div>
       </div>
