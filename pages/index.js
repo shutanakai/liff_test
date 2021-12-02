@@ -13,7 +13,9 @@ export default memo(function Home() {
         <div className="header">
           <p>ユーザー名：{userInfo ? userInfo.name : ""}</p>
           <p>ユーザーID：{userInfo ? userInfo.id : ""}</p>
-          {token && <p>トークン：{token.name}</p>}
+          {token && (
+            <p>トークン：{token.name}</p>
+          )}
           <img
             ref={inputRef}
             alt={userInfo ? userInfo.id : ""}
