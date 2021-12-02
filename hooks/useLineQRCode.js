@@ -19,6 +19,10 @@ export const useLineQRCode = () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                    .then(() => {
+                        const userId = liff.getDecodedIDToken();
+                        console.log(userId);
+                    })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
@@ -33,8 +37,6 @@ export const useLineQRCode = () => {
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
-                    const data = await liff.getDecodedIDToken();
-                    console.log(data);
                 };
                 return user;
             };
