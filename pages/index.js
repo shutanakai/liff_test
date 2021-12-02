@@ -48,6 +48,7 @@ export default memo(function Home() {
       });
     } else {
       setStatus(true);
+      setErr("liff.id === null");
     }
   }
 
