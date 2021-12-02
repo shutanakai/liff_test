@@ -23,7 +23,10 @@ export default memo(function Home() {
           ) : (
             <p>tokenがありません</p>
           )}
-          <button onClick={() => sendMessages("test")}>メッセージ送信</button>
+          <button onClick={() => sendMessages({
+              type: 'text',
+              text: 'Hello, World!'
+          })}>メッセージ送信</button>
         </div>
       </div>
     </section>

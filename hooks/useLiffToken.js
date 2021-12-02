@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 export const useLiffToken = () => {
     const [token, setToken] = useState(null);
     const [liffSendMessage, setLiffSendMessage] = useState(null);
+    const [liff, setLiff] = useState(null);
 
     useEffect(
         () => {
@@ -20,12 +21,13 @@ export const useLiffToken = () => {
                 if (!liff.isLoggedIn()) {
                     liff.login();
                 };
+                setLiff(liff);
             };
 
             initLiff();
         },
-        [setToken, setLiffSendMessage],
+        [setToken, setLiffSendMessage, setLiff],
     );
 
-    return { token, liffSendMessage };
+    return { token, liffSendMessage, liff };
 }
