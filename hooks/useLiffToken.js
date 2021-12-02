@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 const VConsole = dynamic(() => {
     import('vconsole'), { ssr: false}
 });
