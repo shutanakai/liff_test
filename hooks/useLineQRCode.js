@@ -36,7 +36,7 @@ export const useLineQRCode = () => {
                     if (inputRef.current instanceof HTMLCanvasElement && user) {
                         await QRCode.toCanvas(
                             inputRef.current,
-                            token.sub,
+                            token.iss,
                             options,
                             function (error) {
                                 if (error) {
