@@ -59,10 +59,15 @@ export const useLineQRCode = () => {
                     }
                 }
             };
-            const idToken = getToken();
-            if (idToken) {
-                initQRCode(idToken);
+
+            const init = async () => {
+                const idToken = await getToken();
+                if (idToken) {
+                    initQRCode(idToken);
+                }
             }
+
+            init();
         },
         [setToken],
     );
