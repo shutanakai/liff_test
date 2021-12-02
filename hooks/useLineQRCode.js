@@ -4,6 +4,7 @@ const QRCode = require('qrcode');
 export const useLineQRCode = () => {
     const inputRef = useRef(null);
     const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
+    const [token, setToken] = useState(null);
 
     useEffect(
         () => {
@@ -19,6 +20,10 @@ export const useLineQRCode = () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                    .then(() => {
+                        const idToken = liff.getDecodedIDToken();
+                        setToken(idToken);
+                    })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
@@ -69,8 +74,8 @@ export const useLineQRCode = () => {
             };
             initQRCode();
         },
-        [setUserInfo],
+        [setUserInfo, setToken],
     );
 
-    return { userInfo, inputRef };
+    return { userInfo, token, inputRef };
 }
