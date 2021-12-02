@@ -3,7 +3,6 @@ const QRCode = require('qrcode');
 
 export const useLineQRCode = () => {
     const inputRef = useRef(null);
-    const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
     const [token, setToken] = useState(null);
 
     useEffect(
@@ -16,8 +15,8 @@ export const useLineQRCode = () => {
                 scale: 2,
                 width: 240,
             };
-            const getUserInfo = async () => {
-                let user;
+            const getToken = async () => {
+                let token;
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                     .then(() => {
@@ -29,26 +28,17 @@ export const useLineQRCode = () => {
                 });
                 if (!liff.isLoggedIn()) {
                     liff.login();
-                } else {
-                    await liff.getProfile()
-                        .then((profile) => {
-                            const {displayName, userId} = profile;
-                            user = {name: displayName, id: userId};
-                            console.log(user);
-                        }).catch((error) => {
-                            alert(`エラー： ${error}`);
-                        });
                 };
-                return user;
+                return token;
             };
             const initQRCode = async () => {
-                let user;
+                let token;
                 if (inputRef && inputRef.current) {
-                    user = await getUserInfo();
+                    token = await getToken();
                     if (inputRef.current instanceof HTMLCanvasElement && user) {
                         await QRCode.toCanvas(
                             inputRef.current,
-                            user.id,
+                            token.sub,
                             options,
                             function (error) {
                                 if (error) {
@@ -58,7 +48,7 @@ export const useLineQRCode = () => {
                         );
                     } else if (inputRef.current instanceof HTMLImageElement && user) {
                         await QRCode.toDataURL(
-                            user.id,
+                            token.sub,
                             options,
                             function (error, url) {
                                 if (error) {
@@ -69,13 +59,14 @@ export const useLineQRCode = () => {
                                 }
                         });
                     }
-                    await setUserInfo(user);
                 }
             };
-            initQRCode();
+            if (token) {
+                initQRCode();
+            }
         },
-        [setUserInfo, setToken],
+        [setToken, token],
     );
 
-    return { userInfo, token, inputRef };
+    return { token, inputRef };
 }
