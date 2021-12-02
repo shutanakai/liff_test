@@ -9,6 +9,7 @@ export const useLineQRCode = () => {
         () => {
             const options = {
                 errorCorrectionLevel: 'H',
+                quality: 0.3,
                 type: 'image/jpeg',
                 margin: 2,
                 scale: 2,
