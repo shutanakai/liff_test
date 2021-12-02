@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-
+const VConsole = dynamic(() => {
+    import('vconsole'), { ssr: false}
+});
 
 export const useLiffToken = () => {
     const [token, setToken] = useState(null);
@@ -25,9 +27,6 @@ export const useLiffToken = () => {
                 return liff;
             };
 
-            const VConsole = dynamic(() => {
-                import('vconsole'), { ssr: false}
-            });
             new VConsole();
 
             const liff = initLiff();
