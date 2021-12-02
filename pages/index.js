@@ -5,9 +5,7 @@ import QRCode from "qrcode.react"
 
 
 export default memo(function Home() {
-  const [status, setStatus] = useState(false);
   const [token, setToken] = useState(null);
-  const [liff, setLiff] = useState(null);
   const [err, setErr] = useState("");
   const message = [{
     type: 'text',
@@ -32,8 +30,7 @@ export default memo(function Home() {
               return liff;
           };
 
-          const liff = initLiff();
-          setLiff(liff);
+          initLiff();
       },
       [setToken],
   );
@@ -43,6 +40,7 @@ export default memo(function Home() {
       await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
           .then(() => {
             liff.sendMessages(messages);
+            liff.closeWindow();
           })
           .catch((err) => {
             alert(`メッセージ送信失敗\n${err}`);
@@ -62,12 +60,6 @@ export default memo(function Home() {
             <p>tokenがありません</p>
           )}
           <button onClick={() => sendMessages(message)}>メッセージ送信</button>
-          {status && (
-            <div>
-              <p>sendMessages失敗</p>
-              <p>{err}</p>
-            </div>
-          )}
         </div>
       </div>
     </section>
