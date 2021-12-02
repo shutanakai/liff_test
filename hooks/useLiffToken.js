@@ -28,7 +28,7 @@ export const useLiffToken = () => {
                 return liff;
             };
 
-            new VConsole();
+            // new VConsole();
 
             const liff = initLiff();
             setLiff(liff);
