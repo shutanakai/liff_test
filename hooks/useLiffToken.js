@@ -13,7 +13,7 @@ export const useLiffToken = () => {
                     .then(() => {
                         const idToken = liff.getDecodedIDToken();
                         setToken(idToken);
-                        setSendMessage(liff.sendMessages);
+                        setLiffSendMessage(liff.sendMessages);
                     })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
