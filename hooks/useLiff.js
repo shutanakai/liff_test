@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
-export const useLiffToken = () => {
+export const useLiff = () => {
     const [token, setToken] = useState(null);
-    const [liffSendMessage, setLiffSendMessage] = useState(null);
     const [liff, setLiff] = useState(null);
 
     useEffect(
@@ -13,7 +12,6 @@ export const useLiffToken = () => {
                     .then(() => {
                         const idToken = liff.getDecodedIDToken();
                         setToken(idToken);
-                        setLiffSendMessage(liff.sendMessages);
                     })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
@@ -27,8 +25,8 @@ export const useLiffToken = () => {
             const liff = initLiff();
             setLiff(liff);
         },
-        [setToken, setLiffSendMessage, setLiff],
+        [setToken, setLiff],
     );
 
-    return { token, liffSendMessage, liff };
+    return { token, liff };
 }

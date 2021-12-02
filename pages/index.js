@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useLiffToken } from '../hooks/useLiffToken'
+import { useLiff } from '../hooks/useLiff'
 import { memo, useState } from 'react'
 import QRCode from "qrcode.react"
 
 export default memo(function Home() {
-  const { token, liff } = useLiffToken();
+  const { token, liff } = useLiff();
   const [status, setStatus] = useState(false);
   const message = {
     type: 'text',
