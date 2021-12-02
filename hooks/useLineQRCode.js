@@ -31,10 +31,8 @@ export const useLineQRCode = () => {
                 };
                 return token;
             };
-            const initQRCode = async () => {
-                let token;
+            const initQRCode = async (token) => {
                 if (inputRef && inputRef.current) {
-                    token = await getToken();
                     if (inputRef.current instanceof HTMLCanvasElement && user) {
                         await QRCode.toCanvas(
                             inputRef.current,
@@ -61,11 +59,12 @@ export const useLineQRCode = () => {
                     }
                 }
             };
-            if (token) {
-                initQRCode();
+            const idToken = getToken();
+            if (idToken) {
+                initQRCode(idToken);
             }
         },
-        [setToken, token],
+        [setToken],
     );
 
     return { token, inputRef };
