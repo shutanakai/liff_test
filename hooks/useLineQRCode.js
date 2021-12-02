@@ -21,22 +21,19 @@ export const useLineQRCode = () => {
                 await liff.init({
                     liffId: process.env.NEXT_PUBLIC_LIFF_ID,
                     withLoginOnExternalBrowser: true,
-                })
-                    .then(() => {
-                        liff.getProfile()
-                            .then((profile) => {
-                                const {displayName, userId} = profile;
-                                user = {name: displayName, id: userId};
-                                console.log(user);
-                            }).catch((error) => {
-                                alert(`エラー： ${error}`);
-                            });
-                        const userId = liff.getDecodedIDToken();
-                        console.log(userId);
-                    })
-                    .catch((err) => {
+                }).catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
+                liff.getProfile()
+                    .then((profile) => {
+                        const {displayName, userId} = profile;
+                        user = {name: displayName, id: userId};
+                        console.log(user);
+                    }).catch((error) => {
+                        alert(`エラー： ${error}`);
+                    });
+                const userId = liff.getDecodedIDToken();
+                console.log(userId);
                 return user;
             };
             const initQRCode = async () => {
