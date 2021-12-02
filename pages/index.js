@@ -5,7 +5,11 @@ import { memo } from 'react'
 import QRCode from "qrcode.react"
 
 export default memo(function Home() {
-  const { token } = useLiffToken();
+  const { token, liffSendMessage } = useLiffToken();
+
+  const sendMessages = (message) => {
+    liffSendMessage(message);
+  }
 
   return (
     <>
@@ -19,6 +23,7 @@ export default memo(function Home() {
           ) : (
             <p>tokenがありません</p>
           )}
+          <button onClick={() => sendMessages("test")}>メッセージ送信</button>
         </div>
       </div>
     </section>
