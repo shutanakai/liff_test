@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useLineQRCode } from '../hooks/useLineQRCode'
+import { useLiffToken } from '../hooks/useLiffToken'
 import { memo } from 'react'
 import QRCode from "qrcode.react"
 
 export default memo(function Home() {
-  const { token } = useLineQRCode();
+  const { token } = useLiffToken();
 
   return (
     <>
@@ -15,7 +15,7 @@ export default memo(function Home() {
           <p>ユーザー名：{token ? token.name : "取得できませんでした"}</p>
           <p>ユーザーID：{token ? token.sub : "取得できませんでした"}</p>
           {token ? (
-              <QRCode value={token.sub} />
+            <QRCode value={token.sub} />
           ) : (
             <p>tokenがありません</p>
           )}
