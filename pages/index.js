@@ -13,11 +13,13 @@ export default memo(function Home() {
         <div className="header">
           <p>ユーザー名：{token ? token.name : "取得できませんでした"}</p>
           <p>ユーザーID：{token ? token.sub : "取得できませんでした"}</p>
-          {token && (
+          {token && inputRef ? (
               <img
                 ref={inputRef}
                 alt={token ? token.sub : ""}
               />
+          ) : (
+            <p>inputRefがありません</p>
           )}
         </div>
       </div>
