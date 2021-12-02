@@ -8,6 +8,10 @@ export default memo(function Home() {
   const { token, liff } = useLiffToken();
   const [status, setStatus] = useState(false);
   const [err, setErr] = useState("");
+  const message = {
+    type: 'text',
+    text: 'Hello, World!'
+  };
 
   const sendMessages = (message) => {
     liff.sendMessages(message).then(() => {
@@ -30,12 +34,9 @@ export default memo(function Home() {
           ) : (
             <p>tokenがありません</p>
           )}
-          <button onClick={() => sendMessages({
-              type: 'text',
-              text: 'Hello, World!'
-          })}>メッセージ送信</button>
+          <button onClick={() => sendMessages(message)}>メッセージ送信</button>
           {status && (
-            <p>sendMessages失敗</p>
+            <p>sendMessages失敗<br/>{err}</p>
           )}
         </div>
       </div>
