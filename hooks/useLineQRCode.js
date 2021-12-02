@@ -35,7 +35,7 @@ export const useLineQRCode = () => {
                             alert(`エラー： ${error}`);
                         });
                     const idToken = await liff.getDecodedIDToken();
-                    await setToken(idToken);
+                    await setToken(idToken ? idToken : {idToken: "is null"});
                 };
                 return user;
             };
