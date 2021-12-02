@@ -8,9 +8,8 @@ export const useLineQRCode = () => {
     useEffect(
         () => {
             const options = {
+                errorCorrectionLevel: 'H',
                 type: 'image/jpeg',
-                quality: 0.3,
-                level: 'H',
                 margin: 2,
                 scale: 2,
                 width: 240,
