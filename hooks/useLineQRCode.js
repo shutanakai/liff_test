@@ -33,6 +33,8 @@ export const useLineQRCode = () => {
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
+                    const data = await liff.getDecodedIDToken();
+                    console.log(data);
                 };
                 return user;
             };
