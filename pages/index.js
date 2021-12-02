@@ -39,7 +39,7 @@ export default memo(function Home() {
   );
 
   const sendMessages = (messages) => {
-    if (liff.id) {
+    if (liff) {
       liff.sendMessages(messages).then(() => {
         console.log("success");
       }).catch((err) => {
@@ -48,7 +48,7 @@ export default memo(function Home() {
       });
     } else {
       setStatus(true);
-      setErr("liff.id === null");
+      setErr("liff === null");
     }
   }
 
