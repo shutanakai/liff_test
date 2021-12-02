@@ -39,9 +39,10 @@ export default memo(function Home() {
   );
 
   const sendMessages = (messages) => {
-    if (liff) {
+    if (liff.sendMessages) {
       liff.sendMessages(messages).then(() => {
-        console.log("success");
+        setStatus(true);
+        setErr("then");
       }).catch((err) => {
         setStatus(true);
         setErr(err.toString());
