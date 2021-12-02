@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import VConsole from 'vconsole';
 
 export const useLiffToken = () => {
     const [token, setToken] = useState(null);
@@ -23,6 +24,8 @@ export const useLiffToken = () => {
                 };
                 setLiff(liff);
             };
+
+            new VConsole();
 
             initLiff();
         },

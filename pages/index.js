@@ -7,7 +7,6 @@ import QRCode from "qrcode.react"
 export default memo(function Home() {
   const { token, liff } = useLiffToken();
   const [status, setStatus] = useState(false);
-  const [err, setErr] = useState("");
   const message = {
     type: 'text',
     text: 'Hello, World!'
@@ -18,7 +17,7 @@ export default memo(function Home() {
       console.log("success");
     }).catch((err) => {
       setStatus(true);
-      setErr(err);
+      console.log(err);
     });
   }
 
@@ -36,7 +35,7 @@ export default memo(function Home() {
           )}
           <button onClick={() => sendMessages(message)}>メッセージ送信</button>
           {status && (
-            <p>sendMessages失敗<br/>{err}</p>
+            <p>sendMessages失敗</p>
           )}
         </div>
       </div>
