@@ -20,24 +20,24 @@ export const useLineQRCode = () => {
                 const liff = (await import('@line/liff')).default;
                 await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
                     .then(() => {
+                        if (!liff.isLoggedIn()) {
+                            liff.login();
+                        } else {
+                            liff.getProfile()
+                                .then((profile) => {
+                                    const {displayName, userId} = profile;
+                                    user = {name: displayName, id: userId};
+                                    console.log(user);
+                                }).catch((error) => {
+                                    alert(`エラー： ${error}`);
+                                });
+                        };
                         const userId = liff.getDecodedIDToken();
                         console.log(userId);
                     })
                     .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
-                    await liff.getProfile()
-                        .then((profile) => {
-                            const {displayName, userId} = profile;
-                            user = {name: displayName, id: userId};
-                            console.log(user);
-                        }).catch((error) => {
-                            alert(`エラー： ${error}`);
-                        });
-                };
                 return user;
             };
             const initQRCode = async () => {
