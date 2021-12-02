@@ -18,22 +18,26 @@ export const useLineQRCode = () => {
             const getUserInfo = async () => {
                 let user;
                 const liff = (await import('@line/liff')).default;
-                await liff.init({
-                    liffId: process.env.NEXT_PUBLIC_LIFF_ID,
-                    withLoginOnExternalBrowser: true,
-                }).catch((err) => {
+                await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                    .then(() => {
+                        const idToken = liff.getDecodedIDToken();
+                        console.log(idToken ? idToken : "idToken is null");
+                    })
+                    .catch((err) => {
                         alert(`LIFFの初期化失敗。\n${err}`);
                 });
-                liff.getProfile()
-                    .then((profile) => {
-                        const {displayName, userId} = profile;
-                        user = {name: displayName, id: userId};
-                        console.log(user);
-                    }).catch((error) => {
-                        alert(`エラー： ${error}`);
-                    });
-                const userId = liff.getDecodedIDToken();
-                console.log(userId);
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    await liff.getProfile()
+                        .then((profile) => {
+                            const {displayName, userId} = profile;
+                            user = {name: displayName, id: userId};
+                            console.log(user);
+                        }).catch((error) => {
+                            alert(`エラー： ${error}`);
+                        });
+                };
                 return user;
             };
             const initQRCode = async () => {
