@@ -22,10 +22,6 @@ export default memo(function Home() {
                   .then(() => {
                       const idToken = liff.getDecodedIDToken();
                       setToken(idToken);
-                      liff.sendMessages([{
-                        type: 'text',
-                        text: '初期化完了'
-                      }]);
                   })
                   .catch((err) => {
                       alert(`LIFFの初期化失敗。\n${err}`);
@@ -42,26 +38,22 @@ export default memo(function Home() {
       [setToken],
   );
 
-  const sendMessages = (messages) => {
-    if (liff.sendMessages) {
-      liff.sendMessages(messages).then(() => {
-        setStatus(true);
-        setErr("then");
-      }).catch((err) => {
-        setStatus(true);
-        setErr(err.toString());
+  const sendMessages = async (messages) => {
+    const liff = (await import('@line/liff')).default;
+      await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+          .then(() => {
+            liff.sendMessages(messages);
+          })
+          .catch((err) => {
+            alert(`メッセージ送信失敗\n${err}`);
       });
-    } else {
-      setStatus(true);
-      setErr("liff === null");
-    }
   }
 
   return (
     <>
     <section className="app-wrapper">
       <div className="member-card-app">
-        <div className="header">
+        <div>
           <p>ユーザー名：{token ? token.name : "取得できませんでした"}</p>
           <p>ユーザーID：{token ? token.sub : "取得できませんでした"}</p>
           {token ? (
