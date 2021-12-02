@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import VConsole from 'vconsole';
 
 export const useLiffToken = () => {
@@ -22,12 +22,13 @@ export const useLiffToken = () => {
                 if (!liff.isLoggedIn()) {
                     liff.login();
                 };
-                setLiff(liff);
+                return liff;
             };
 
             new VConsole();
 
-            initLiff();
+            const liff = initLiff();
+            setLiff(liff);
         },
         [setToken, setLiffSendMessage, setLiff],
     );
