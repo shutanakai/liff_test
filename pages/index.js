@@ -3,8 +3,14 @@ import styles from '../styles/Home.module.css'
 import { useLiff } from '../hooks/useLiff'
 import { memo, useState } from 'react'
 import QRCode from "qrcode.react"
+import dynamic from 'next/dynamic';
+const VConsole = dynamic(() => {
+  import('vconsole'), { ssr: false}
+});
+
 
 export default memo(function Home() {
+  new VConsole();
   const { token, liff } = useLiff();
   const [status, setStatus] = useState(false);
   const message = {
