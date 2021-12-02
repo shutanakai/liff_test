@@ -4,7 +4,6 @@ const QRCode = require('qrcode');
 export const useLineQRCode = () => {
     const inputRef = useRef(null);
     const [userInfo, setUserInfo] = useState({name: 'テスト', id: '12345'});
-    const [token, setToken] = useState({});
 
     useEffect(
         () => {
@@ -34,14 +33,13 @@ export const useLineQRCode = () => {
                         }).catch((error) => {
                             alert(`エラー： ${error}`);
                         });
-                    const idToken = await liff.getDecodedIDToken();
-                    await setToken(idToken ? idToken : {idToken: "is null"});
                 };
                 return user;
             };
             const initQRCode = async () => {
+                let user;
                 if (inputRef && inputRef.current) {
-                    const { user } = await getUserInfo();
+                    user = await getUserInfo();
                     if (inputRef.current instanceof HTMLCanvasElement && user) {
                         await QRCode.toCanvas(
                             inputRef.current,
@@ -71,8 +69,8 @@ export const useLineQRCode = () => {
             };
             initQRCode();
         },
-        [setUserInfo, setToken],
+        [setUserInfo],
     );
 
-    return { userInfo, token, inputRef };
+    return { userInfo, inputRef };
 }

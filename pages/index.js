@@ -1,10 +1,10 @@
+import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useLineQRCode } from '../hooks/useLineQRCode'
 import { memo } from 'react';
 
 export default memo(function Home() {
-  const { userInfo, token, inputRef } = useLineQRCode();
-  console.log(token);
+  const { userInfo, inputRef } = useLineQRCode();
 
   return (
     <>
