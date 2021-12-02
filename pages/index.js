@@ -1,30 +1,53 @@
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { useLiff } from '../hooks/useLiff'
-import { memo, useState } from 'react'
+import { memo, useState, useEffect } from 'react'
 import QRCode from "qrcode.react"
-import dynamic from 'next/dynamic';
-const VConsole = dynamic(() => {
-  import('vconsole'), { ssr: false}
-});
 
 
 export default memo(function Home() {
-  new VConsole();
-  const { token, liff } = useLiff();
   const [status, setStatus] = useState(false);
+  const [token, setToken] = useState(null);
+  const [liff, setLiff] = useState(null);
   const message = {
     type: 'text',
     text: 'Hello, World!'
   };
 
+  useEffect(
+      () => {
+          const initLiff = async () => {
+              const liff = (await import('@line/liff')).default;
+              await liff.init({liffId: process.env.NEXT_PUBLIC_LIFF_ID})
+                  .then(() => {
+                      const idToken = liff.getDecodedIDToken();
+                      setToken(idToken);
+                  })
+                  .catch((err) => {
+                      alert(`LIFFの初期化失敗。\n${err}`);
+              });
+              if (!liff.isLoggedIn()) {
+                  liff.login();
+              };
+              return liff;
+          };
+
+          const liff = initLiff();
+          setLiff(liff);
+      },
+      [setToken],
+  );
+
   const sendMessages = (message) => {
-    liff.sendMessages(message).then(() => {
-      console.log("success");
-    }).catch((err) => {
+    if (liff.id) {
+      liff.sendMessages(message).then(() => {
+        console.log("success");
+      }).catch((err) => {
+        setStatus(true);
+        console.log(err);
+      });
+    } else {
       setStatus(true);
-      console.log(err);
-    });
+    }
   }
 
   return (
