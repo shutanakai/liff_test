@@ -1,9 +1,5 @@
 export const flexMessages = [
     {
-        type: 'text',
-        text: 'Hello, World!',
-    },
-    {
         type: 'bubble',
         hero: {
             type: 'image',
