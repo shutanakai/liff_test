@@ -43,7 +43,7 @@ export default memo(function Home() {
         console.log("success");
       }).catch((err) => {
         setStatus(true);
-        console.log(err);
+        alert(err);
       });
     } else {
       setStatus(true);
