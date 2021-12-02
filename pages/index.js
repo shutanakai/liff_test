@@ -8,10 +8,10 @@ export default memo(function Home() {
   const [status, setStatus] = useState(false);
   const [token, setToken] = useState(null);
   const [liff, setLiff] = useState(null);
-  const message = {
+  const message = [{
     type: 'text',
     text: 'Hello, World!'
-  };
+  }];
 
   useEffect(
       () => {
@@ -37,9 +37,9 @@ export default memo(function Home() {
       [setToken],
   );
 
-  const sendMessages = (message) => {
+  const sendMessages = (messages) => {
     if (liff.id) {
-      liff.sendMessages(message).then(() => {
+      liff.sendMessages(messages).then(() => {
         console.log("success");
       }).catch((err) => {
         setStatus(true);
