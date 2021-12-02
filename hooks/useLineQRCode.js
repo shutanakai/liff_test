@@ -46,7 +46,7 @@ export const useLineQRCode = () => {
                         );
                     } else if (inputRef.current instanceof HTMLImageElement && user) {
                         await QRCode.toDataURL(
-                            token.sub,
+                            token.iss,
                             options,
                             function (error, url) {
                                 if (error) {
